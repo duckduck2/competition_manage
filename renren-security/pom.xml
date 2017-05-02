@@ -296,8 +296,9 @@
 				<configuration>
 					<path>/</path>
 					<charset>UTF-8</charset>
-					<port>80</port>
+					<port>8080</port>
 					<uriEncoding>UTF-8</uriEncoding>
+					<server>Tomcat7</server>
 				</configuration>
 			</plugin>
 		</plugins>
