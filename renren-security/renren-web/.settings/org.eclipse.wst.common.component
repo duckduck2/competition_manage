@@ -13,12 +13,6 @@
         <dependent-module archiveName="renren-gen-2.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/renren-gen/renren-gen">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="renren-schedule-2.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/renren-schedule/renren-schedule">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="renren-api-2.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/renren-api/renren-api">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="context-root" value="renren-security"/>
         <property name="java-output-path" value="/renren-web/target/classes"/>
     </wb-module>
