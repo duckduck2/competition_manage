@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.dao.ApplicationDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.entity.ApplicationEntity" id="ApplicationMap">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="name" column="name"/>
+        <result property="reviewer" column="reviewer"/>
+        <result property="organizer" column="organizer"/>
+        <result property="applyTime" column="apply_time"/>
+        <result property="state" column="state"/>
+        <result property="situation" column="situation"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.renren.entity.ApplicationEntity">
+		select * from cm_application where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.renren.entity.ApplicationEntity">
+		select * from cm_application
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from cm_application 
+	</select>
+	 
+	<insert id="save" parameterType="io.renren.entity.ApplicationEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into cm_application
+		(
+			`user_id`, 
+			`name`, 
+			`reviewer`, 
+			`organizer`, 
+			`apply_time`, 
+			`state`,
+			`situation`,
+		)
+		values
+		(
+			#{userId}, 
+			#{name}, 
+			#{reviewer}, 
+			#{organizer}, 
+			#{applyTime}, 
+			#{state},
+			#{situation}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.renren.entity.ApplicationEntity">
+		update cm_application 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="reviewer != null">`reviewer` = #{reviewer}, </if>
+			<if test="organizer != null">`organizer` = #{organizer}, </if>
+			<if test="applyTime != null">`apply_time` = #{applyTime}, </if>
+			<if test="state != null">`state` = #{state}</if>
+			<if test="situation != null">`situation` = #{situation}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from cm_application where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from cm_application where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
